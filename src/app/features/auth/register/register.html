@@ -1,0 +1,182 @@
+<main class="register-page">
+
+  <section class="register-card">
+
+    <div class="brand">
+
+      <h1>TaskHive</h1>
+
+      <p>
+        Create your account and start managing tasks.
+      </p>
+
+    </div>
+
+    <form
+      [formGroup]="registerForm"
+      (ngSubmit)="onSubmit()"
+      novalidate
+    >
+
+      <!-- Name -->
+
+      <div class="form-group">
+
+        <label for="name">
+          Full Name
+        </label>
+
+        <input
+          id="name"
+          type="text"
+          formControlName="name"
+          placeholder="Enter your name"
+        >
+
+        @if (
+          registerForm.controls.name.touched &&
+          registerForm.controls.name.hasError('required')
+        ) {
+          <small class="error">
+            Name is required.
+          </small>
+        }
+
+        @if (
+          registerForm.controls.name.touched &&
+          registerForm.controls.name.hasError('minlength')
+        ) {
+          <small class="error">
+            Name must be at least 3 characters.
+          </small>
+        }
+
+      </div>
+
+
+      <!-- Email -->
+
+      <div class="form-group">
+
+        <label for="email">
+          Email
+        </label>
+
+        <input
+          id="email"
+          type="email"
+          formControlName="email"
+          placeholder="Enter your email"
+        >
+
+        @if (
+          registerForm.controls.email.touched &&
+          registerForm.controls.email.hasError('required')
+        ) {
+          <small class="error">
+            Email is required.
+          </small>
+        }
+
+        @if (
+          registerForm.controls.email.touched &&
+          registerForm.controls.email.hasError('email')
+        ) {
+          <small class="error">
+            Please enter a valid email.
+          </small>
+        }
+
+      </div>
+
+
+      <!-- Password -->
+
+      <div class="form-group">
+
+        <label for="password">
+          Password
+        </label>
+
+        <input
+          id="password"
+          type="password"
+          formControlName="password"
+          placeholder="Create a password"
+        >
+
+        @if (
+          registerForm.controls.password.touched &&
+          registerForm.controls.password.hasError('required')
+        ) {
+          <small class="error">
+            Password is required.
+          </small>
+        }
+
+        @if (
+          registerForm.controls.password.touched &&
+          registerForm.controls.password.hasError('minlength')
+        ) {
+          <small class="error">
+            Password must be at least 6 characters.
+          </small>
+        }
+
+      </div>
+
+
+      <!-- Error -->
+
+      @if (errorMessage) {
+
+        <div class="api-error">
+          {{ errorMessage }}
+        </div>
+
+      }
+
+
+      <!-- Success -->
+
+      @if (successMessage) {
+
+        <div class="success">
+          {{ successMessage }}
+        </div>
+
+      }
+
+
+      <button
+        type="submit"
+        [disabled]="registerForm.invalid || loading"
+      >
+
+        @if (loading) {
+          Creating account...
+        } @else {
+          Create Account
+        }
+
+      </button>
+
+    </form>
+
+
+    <div class="login-link">
+
+      Already have an account?       
+
+      <button
+        type="button"
+        (click)="router.navigate(['/auth'])"
+      >
+        Sign In
+      </button>
+
+    </div>
+
+  </section>
+
+</main>

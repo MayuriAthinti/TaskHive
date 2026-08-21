@@ -1,0 +1,101 @@
+<div class="create-project-page">
+
+  <div class="form-card">
+
+    <h1>Create Project</h1>
+
+    <p class="subtitle">
+      Create a new project for your team.
+    </p>
+
+    @if (errorMessage) {
+      <div class="error">
+        {{ errorMessage }}
+      </div>
+    }
+
+    <form
+      [formGroup]="projectForm"
+      (ngSubmit)="onSubmit()">
+
+      <div class="form-group">
+
+        <label>Project Name</label>
+
+        <input
+          type="text"
+          formControlName="name"
+          placeholder="Enter project name">
+
+        @if (
+          projectForm.controls.name.touched &&
+          projectForm.controls.name.invalid
+        ) {
+          <small>
+            Project name must contain at least 3 characters.
+          </small>
+        }
+
+      </div>
+
+      <div class="form-group">
+
+        <label>Description</label>
+
+        <textarea
+          rows="5"
+          formControlName="description"
+          placeholder="Enter project description">
+        </textarea>
+
+      </div>
+
+      <div class="form-group">
+
+        <label>Status</label>
+
+        <select formControlName="status">
+
+          <option value="active">
+            Active
+          </option>
+
+          <option value="on-hold">
+            On Hold
+          </option>
+
+          <option value="completed">
+            Completed
+          </option>
+
+        </select>
+
+      </div>
+
+      <div class="actions">
+
+        <button
+          type="button"
+          class="cancel-btn"
+          (click)="cancel()">
+
+          Cancel
+
+        </button>
+
+        <button
+          type="submit"
+          class="save-btn"
+          [disabled]="loading">
+
+          {{ loading ? 'Creating...' : 'Create Project' }}
+
+        </button>
+
+      </div>
+
+    </form>
+
+  </div>
+
+</div>

@@ -1,0 +1,208 @@
+<div class="dashboard">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+
+    <div class="logo">
+      <h2>TaskHive</h2>
+    </div>
+
+    <nav>
+
+      <button class="nav-item active">
+        <span>▦</span>
+        Dashboard
+      </button>
+
+      <button
+        class="nav-item"
+        (click)="goToProjects()">
+        <span>▣</span>
+        Projects
+      </button>
+
+      <button
+        class="nav-item"
+        (click)="goToTasks()">
+        <span>✓</span>
+        Tasks
+      </button>
+
+    </nav>
+
+    <button
+      class="logout"
+      (click)="logout()">
+      ⇥ Logout
+    </button>
+
+  </aside>
+
+
+  <!-- Main content -->
+  <main class="main-content">
+
+    <!-- Header -->
+    <header class="header">
+
+      <div>
+        <h1>Dashboard</h1>
+
+        <p>
+          Welcome back,
+          <strong>
+            {{ currentUser()?.name || 'User' }}
+          </strong>
+        </p>
+      </div>
+
+      <div class="profile">
+
+        <div class="avatar">
+          {{ currentUser()?.name?.charAt(0) || 'U' }}
+        </div>
+
+        <div>
+          <strong>
+            {{ currentUser()?.name || 'User' }}
+          </strong>
+
+          <small>
+            {{ currentUser()?.role || 'member' }}
+          </small>
+        </div>
+
+      </div>
+
+    </header>
+
+
+    <!-- Statistics -->
+    <section class="stats">
+
+      <div class="stat-card">
+
+        <div class="stat-icon">
+          ✓
+        </div>
+
+        <div>
+          <p>Total Tasks</p>
+          <h2>{{ totalTasks }}</h2>
+        </div>
+
+      </div>
+
+
+      <div class="stat-card">
+
+        <div class="stat-icon">
+          ◷
+        </div>
+
+        <div>
+          <p>To Do</p>
+          <h2>{{ todoTasks }}</h2>
+        </div>
+
+      </div>
+
+
+      <div class="stat-card">
+
+        <div class="stat-icon">
+          ↻
+        </div>
+
+        <div>
+          <p>In Progress</p>
+          <h2>{{ inProgressTasks }}</h2>
+        </div>
+
+      </div>
+
+
+      <div class="stat-card">
+
+        <div class="stat-icon">
+          ✓
+        </div>
+
+        <div>
+          <p>Completed</p>
+          <h2>{{ completedTasks }}</h2>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- Recent Tasks -->
+    <section class="content-card">
+
+      <div class="section-header">
+
+        <div>
+          <h2>Recent Tasks</h2>
+          <p>Keep track of your work</p>
+        </div>
+
+        <button
+          class="primary-btn"
+          (click)="goToTasks()">
+          View All Tasks
+        </button>
+
+      </div>
+
+      @if (tasks.length > 0) {
+
+  <div class="task-list">
+
+    @for (task of tasks; track task.id) {
+      <div class="task-item">
+        <h4>{{ task.title }}</h4>
+        <p>{{ task.description }}</p>
+        <span>{{ task.status }}</span>
+      </div>
+    }
+
+  </div>
+
+} @else {
+
+  <div class="empty-state">
+    <div class="empty-icon">✓</div>
+    <h3>No tasks yet</h3>
+    <p>Your tasks will appear here once they are created.</p>
+  </div>
+
+}
+
+    </section>
+
+
+    <!-- Projects -->
+    <section class="content-card">
+
+      <div class="section-header">
+
+        <div>
+          <h2>Projects</h2>
+          <p>Manage your projects</p>
+        </div>
+
+        <button
+          class="primary-btn"
+          (click)="goToProjects()">
+          View Projects
+        </button>
+
+      </div>
+
+    </section>
+
+  </main>
+
+</div>

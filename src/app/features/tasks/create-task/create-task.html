@@ -1,0 +1,229 @@
+<div class="create-task-page">
+
+  <div class="page-header">
+
+    <div>
+      <h1>Create Task</h1>
+      <p>Add a new task to your project</p>
+    </div>
+
+    <button
+      type="button"
+      class="back-btn"
+      (click)="cancel()">
+      ← Back to Tasks
+    </button>
+
+  </div>
+
+
+  <div class="form-card">
+
+    @if (errorMessage) {
+      <div class="error-message">
+        {{ errorMessage }}
+      </div>
+    }
+
+
+    <form
+      [formGroup]="taskForm"
+      (ngSubmit)="onSubmit()">
+
+      <!-- Title -->
+
+      <div class="form-group">
+
+        <label for="title">
+          Task Title
+        </label>
+
+        <input
+          id="title"
+          type="text"
+          formControlName="title"
+          placeholder="Enter task title">
+
+        @if (
+          taskForm.controls.title.invalid &&
+          taskForm.controls.title.touched
+        ) {
+          <small class="error">
+            Title is required and must contain at least 3 characters.
+          </small>
+        }
+
+      </div>
+
+
+      <!-- Description -->
+
+      <div class="form-group">
+
+        <label for="description">
+          Description
+        </label>
+
+        <textarea
+          id="description"
+          rows="4"
+          formControlName="description"
+          placeholder="Describe the task">
+        </textarea>
+
+      </div>
+
+
+      <!-- Status and Priority -->
+
+      <div class="form-row">
+
+        <div class="form-group">
+
+          <label for="status">
+            Status
+          </label>
+
+          <select
+            id="status"
+            formControlName="status">
+
+            <option value="todo">
+              To Do
+            </option>
+
+            <option value="in-progress">
+              In Progress
+            </option>
+
+            <option value="done">
+              Done
+            </option>
+
+          </select>
+
+        </div>
+
+
+        <div class="form-group">
+
+          <label for="priority">
+            Priority
+          </label>
+
+          <select
+            id="priority"
+            formControlName="priority">
+
+            <option value="low">
+              Low
+            </option>
+
+            <option value="medium">
+              Medium
+            </option>
+
+            <option value="high">
+              High
+            </option>
+
+          </select>
+
+        </div>
+
+      </div>
+
+      <div class="form-row">
+
+        <div class="form-group">
+
+          <label for="projectId">
+            Project ID
+          </label>
+
+          <input
+            id="projectId"
+            type="text"
+            formControlName="projectId"
+            placeholder="Enter project ID">
+
+          @if (
+            taskForm.controls.projectId.invalid &&
+            taskForm.controls.projectId.touched
+          ) {
+            <small class="error">
+              Project ID is required.
+            </small>
+          }
+
+        </div>
+
+
+        <div class="form-group">
+
+          <label for="assigneeId">
+            Assignee ID
+          </label>
+
+          <input
+            id="assigneeId"
+            type="text"
+            formControlName="assigneeId"
+            placeholder="Enter assignee ID">
+
+          @if (
+            taskForm.controls.assigneeId.invalid &&
+            taskForm.controls.assigneeId.touched
+          ) {
+            <small class="error">
+              Assignee ID is required.
+            </small>
+          }
+
+        </div>
+
+      </div>
+
+
+
+      <div class="form-group">
+
+        <label for="dueDate">
+          Due Date
+        </label>
+
+        <input
+          id="dueDate"
+          type="date"
+          formControlName="dueDate">
+
+      </div>
+
+
+
+
+      <div class="form-actions">
+
+        <button
+          type="button"
+          class="cancel-btn"
+          (click)="cancel()">
+          Cancel
+        </button>
+
+       <button
+  type="submit"
+  class="submit-btn"
+  [disabled]="loading">
+
+  {{ loading ? 'Creating Task...' : 'Create Task' }}
+
+</button>
+
+      </div>
+
+    </form>
+
+  </div>
+
+</div>

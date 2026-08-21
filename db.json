@@ -1,0 +1,28 @@
+{
+  "tasks": [
+    {
+      "id": "5QVJl5BnIYI"
+    },
+    {
+      "title": "Build TaskHive",
+      "description": "Create task management app",
+      "status": "in-progress",
+      "priority": "medium",
+      "projectId": 1,
+      "assigneeId": 2,
+      "dueDate": "2026-08-25",
+      "id": "AW7qqgKWLzo"
+    },
+    {
+      "title": "Build TaskHive",
+      "description": "create task management app",
+      "status": "in-progress",
+      "priority": "medium",
+      "projectId": "1",
+      "assigneeId": "2",
+      "dueDate": "2026-08-25",
+      "id": "eFlmAyFBCBI"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}

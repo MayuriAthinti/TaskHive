@@ -1,0 +1,131 @@
+<main class="auth-page">
+
+  <section class="auth-card">
+
+    <div class="brand">
+      <h1>TaskHive</h1>
+      
+    </div>
+
+    <form
+      [formGroup]="loginForm"
+      (ngSubmit)="onSubmit()"
+      novalidate
+    >
+
+      <!-- Email -->
+
+      <div class="form-group">
+
+        <label for="email">
+          Email
+        </label>
+
+        <input
+          id="email"
+          type="email"
+          formControlName="email"
+          placeholder="Enter your email"
+        >
+
+        @if (
+          loginForm.controls.email.touched &&
+          loginForm.controls.email.hasError('required')
+        ) {
+          <small class="error">
+            Email is required.
+          </small>
+        }
+
+        @if (
+          loginForm.controls.email.touched &&
+          loginForm.controls.email.hasError('email')
+        ) {
+          <small class="error">
+            Please enter a valid email address.
+          </small>
+        }
+
+      </div>
+
+
+      <!-- Password -->
+
+      <div class="form-group">
+
+        <label for="password">
+          Password
+        </label>
+
+        <input
+          id="password"
+          type="password"
+          formControlName="password"
+          placeholder="Enter your password"
+        >
+
+        @if (
+          loginForm.controls.password.touched &&
+          loginForm.controls.password.hasError('required')
+        ) {
+          <small class="error">
+            Password is required.
+          </small>
+        }
+
+        @if (
+          loginForm.controls.password.touched &&
+          loginForm.controls.password.hasError('minlength')
+        ) {
+          <small class="error">
+            Password must be at least 6 characters.
+          </small>
+        }
+
+        <div class="register-link">
+
+  Don't have an account?
+
+  <button
+    type="button"
+    (click)="router.navigate(['/register'])"
+  >
+    Create an account
+  </button>
+
+</div>
+
+      </div>
+
+
+      <!-- API Error -->
+
+      @if (errorMessage) {
+
+        <div class="api-error">
+          {{ errorMessage }}
+        </div>
+
+      }
+
+
+      <!-- Submit -->
+
+      <button
+        type="submit"
+        [disabled]="loginForm.invalid || loading"
+      >
+
+        @if (loading) {
+          Signing in...
+        } @else {
+          Sign In
+        }
+
+      </button>
+
+    </form>
+
+  </section>
+
+</main>

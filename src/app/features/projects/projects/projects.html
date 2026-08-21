@@ -1,0 +1,115 @@
+<div class="projects-page">
+
+  <div class="page-header">
+
+    <div>
+      <h1>Projects</h1>
+      <p>Manage all your projects in one place.</p>
+    </div>
+
+    <button
+      class="create-btn"
+      (click)="createProject()">
+
+      + Create Project
+
+    </button>
+
+  </div>
+
+  @if (loading) {
+
+    <div class="loading">
+      Loading projects...
+    </div>
+
+  }
+
+  @if (errorMessage) {
+
+    <div class="error">
+      {{ errorMessage }}
+    </div>
+
+  }
+
+  @if (!loading && projects.length === 0) {
+
+    <div class="empty-state">
+
+      <h2>No Projects Yet</h2>
+
+      <p>
+        Create your first project to get started.
+      </p>
+
+      <button
+        class="create-btn"
+        (click)="createProject()">
+
+        Create Project
+
+      </button>
+
+    </div>
+
+  }
+
+  @if (!loading && projects.length > 0) {
+
+    <div class="project-grid">
+
+      @for (project of projects; track project.id) {
+
+        <div class="project-card">
+
+          <div class="project-header">
+
+            <h2>
+              {{ project.name }}
+            </h2>
+
+            <span
+              class="status"
+              [class.active]="project.status === 'active'"
+              [class.completed]="project.status === 'completed'"
+              [class.on-hold]="project.status === 'on-hold'">
+
+              {{ project.status }}
+
+            </span>
+
+          </div>
+
+          <p class="description">
+
+            {{ project.description || 'No description available.' }}
+
+          </p>
+
+          <div class="project-footer">
+
+            <span>
+              Created:
+              {{ project.createdAt | date:'mediumDate' }}
+            </span>
+
+            <button
+              class="delete-btn"
+              (click)="deleteProject(project.id)">
+
+              Delete
+
+            </button>
+
+          </div>
+
+        </div>
+
+      }
+
+    </div>
+
+  }
+
+</div>

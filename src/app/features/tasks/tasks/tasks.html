@@ -1,0 +1,119 @@
+<div class="tasks-page">
+
+  <div class="page-header">
+
+    <div>
+      <h1>Tasks</h1>
+      <p>Manage and track your tasks</p>
+    </div>
+
+    <button
+  type="button"
+  class="create-btn"
+  (click)="createTask()">
+  + Create Task
+</button>
+
+  </div>
+
+
+  @if (loading) {
+
+    <div class="message">
+      Loading tasks...
+    </div>
+
+  }
+
+
+  @if (errorMessage) {
+
+    <div class="error">
+      {{ errorMessage }}
+    </div>
+
+  }
+
+
+  @if (!loading && tasks.length === 0) {
+
+    <div class="empty-state">
+
+      <div class="empty-icon">✓</div>
+
+      <h2>No tasks found</h2>
+
+      <p>
+        Create your first task to get started.
+      </p>
+<a routerLink="/tasks/create" class="create-btn">
+  + Create Task
+</a>
+
+    </div>
+
+  }
+
+
+  @if (!loading && tasks.length > 0) {
+
+    <div class="task-list">
+
+      @for (task of tasks; track task.id) {
+
+        <div class="task-card">
+
+          <div class="task-content">
+
+            <h3>
+              {{ task.title }}
+            </h3>
+
+            <p>
+              {{ task.description }}
+            </p>
+
+            <div class="task-meta">
+
+              <span
+                class="status"
+                [class.todo]="task.status === 'todo'"
+                [class.progress]="task.status === 'in-progress'"
+                [class.done]="task.status === 'done'">
+
+                {{ task.status }}
+
+              </span>
+
+              <span class="priority">
+                {{ task.priority }}
+              </span>
+
+              @if (task.dueDate) {
+                <span>
+                  Due: {{ task.dueDate | date }}
+                </span>
+              }
+
+            </div>
+
+          </div>
+
+
+          <button
+            class="delete-btn"
+            (click)="deleteTask(task.id)">
+
+            Delete
+
+          </button>
+
+        </div>
+
+      }
+
+    </div>
+
+  }
+
+</div>
