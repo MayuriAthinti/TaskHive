@@ -1,28 +1,45 @@
 {
-  "tasks": [
+  "users": [
     {
-      "id": "5QVJl5BnIYI"
+      "id": 1,
+      "name": "Mayuri",
+      "email": "mayuri@gmail.com",
+      "password": "123456"
     },
     {
+      "id": 1787310477985,
+      "name": "chinni",
+      "email": "chinni@gmail.com",
+      "password": "123456"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "5QVJl5BnIYI",
+      "title": "Create TaskHive UI",
+      "description": "Build the TaskHive user interface",
+      "status": "in-progress",
+      "priority": "medium",
+      "projectId": 1,
+      "assigneeId": 2,
+      "dueDate": "2026-08-25"
+    },
+    {
+      "id": "AW7qqgKWLzo",
       "title": "Build TaskHive",
       "description": "Create task management app",
       "status": "in-progress",
       "priority": "medium",
       "projectId": 1,
       "assigneeId": 2,
-      "dueDate": "2026-08-25",
-      "id": "AW7qqgKWLzo"
-    },
-    {
-      "title": "Build TaskHive",
-      "description": "create task management app",
-      "status": "in-progress",
-      "priority": "medium",
-      "projectId": "1",
-      "assigneeId": "2",
-      "dueDate": "2026-08-25",
-      "id": "eFlmAyFBCBI"
+      "dueDate": "2026-08-25"
     }
   ],
-  "$schema": "./node_modules/json-server/schema.json"
+  "projects": [
+    {
+      "id": 1,
+      "name": "TaskHive",
+      "description": "Task management project"
+    }
+  ]
 }
