@@ -11,6 +11,12 @@
       "name": "chinni",
       "email": "chinni@gmail.com",
       "password": "123456"
+    },
+    {
+      "id": 1787312549253,
+      "name": "Mayuri",
+      "email": "mayuri@test.com",
+      "password": "123456"
     }
   ],
   "tasks": [

@@ -32,7 +32,6 @@ export class AuthComponent {
         Validators.email
       ]
     ],
-
     password: [
       '',
       [
@@ -54,21 +53,44 @@ export class AuthComponent {
 
     const loginData = this.loginForm.getRawValue();
 
+    console.log('LOGIN DATA:', loginData);
+
     this.authService.login(loginData).subscribe({
 
-      next: () => {
-        this.loading = false;
+      next: (response) => {
 
-        this.router.navigate(['/dashboard']);
+        console.log('LOGIN SUCCESS:', response);
+
+        console.log(
+          'Stored token:',
+          localStorage.getItem('taskhive_token')
+        );
+
+        this.router.navigate(['/dashboard'])
+          .then(result => {
+            console.log('Navigation result:', result);
+          })
+          .catch(error => {
+            console.error('Navigation error:', error);
+          });
+
+        this.loading = false;
       },
 
-      error: () => {
+      error: (error) => {
+
+        console.error('LOGIN ERROR:', error);
+
         this.loading = false;
 
         this.errorMessage =
-          'Unable to sign in. Please check your email and password.';
-      }
+          error?.message ||
+          'Unable to sign in. Please try again.';
+      },
 
+      complete: () => {
+        console.log('LOGIN REQUEST COMPLETED');
+      }
     });
   }
 }

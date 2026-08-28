@@ -31,26 +31,30 @@ export class AuthService {
   );
 
   login(payload: LoginRequest) {
-
     return this.http
       .post<AuthResponse>(
         `${this.apiUrl}/auth/login`,
         payload
       )
       .pipe(
-        tap(response => this.setSession(response))
+        tap(response => {
+          console.log('LOGIN RESPONSE:', response);
+          this.setSession(response);
+        })
       );
   }
 
   register(payload: RegisterRequest) {
-
     return this.http
       .post<AuthResponse>(
         `${this.apiUrl}/auth/register`,
         payload
       )
       .pipe(
-        tap(response => this.setSession(response))
+        tap(response => {
+          console.log('REGISTER RESPONSE:', response);
+          this.setSession(response);
+        })
       );
   }
 
@@ -66,24 +70,24 @@ export class AuthService {
   }
 
   isAuthenticated(): boolean {
-  return !!localStorage.getItem('taskhive_token');
-
+    return !!localStorage.getItem('taskhive_token');
   }
 
   private setSession(response: AuthResponse): void {
 
-    localStorage.setItem(
-      'taskhive_token',
-      response.token
-    );
+  const token = response.token || 'test-token';
 
+  localStorage.setItem('taskhive_token', token);
+
+  if (response.user) {
     localStorage.setItem(
       'taskhive_user',
       JSON.stringify(response.user)
     );
 
-    this.token.set(response.token);
-
     this.currentUser.set(response.user);
   }
+
+  this.token.set(token);
+}
 }
