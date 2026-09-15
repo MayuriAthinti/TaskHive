@@ -1,1 +1,55 @@
-<router-outlet></router-outlet>
+<div class="app-layout">
+
+  @if (showSidebar()) {
+
+    <aside class="sidebar">
+
+      <div class="logo">
+        <h2>TaskHive</h2>
+      </div>
+
+      <nav>
+
+        <button
+          class="nav-item"
+          routerLink="/dashboard"
+          routerLinkActive="active">
+          <span>▦</span>
+          Dashboard
+        </button>
+
+        <button
+          class="nav-item"
+          routerLink="/projects"
+          routerLinkActive="active">
+          <span>▣</span>
+          Projects
+        </button>
+
+        <button
+          class="nav-item"
+          routerLink="/tasks"
+          routerLinkActive="active">
+          <span>✓</span>
+          Tasks
+        </button>
+
+      </nav>
+
+      <button
+        class="logout"
+        (click)="logout()">
+        ⇥ Logout
+      </button>
+
+    </aside>
+
+  }
+
+  <main class="main-content">
+
+    <router-outlet></router-outlet>
+
+  </main>
+
+</div>
