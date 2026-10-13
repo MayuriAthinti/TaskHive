@@ -1,119 +1,65 @@
-<div class="tasks-page">
-
-  <div class="page-header">
-
+<div class="page-wrap">
+  <div class="page-top">
     <div>
       <h1>Tasks</h1>
-      <p>Manage and track your tasks</p>
+      <p>{{ tasks.length }} tasks</p>
     </div>
-
-    <button
-  type="button"
-  class="create-btn"
-  (click)="createTask()">
-  + Create Task
-</button>
-
+    <button class="create-btn" (click)="openCreate()">+ New Task</button>
   </div>
 
+  <!-- Filter -->
+  <div class="filters">
+    <button [class.active]="filter==='all'" (click)="filter='all'; applyFilter()">All</button>
+    <button [class.active]="filter==='todo'" (click)="filter='todo'; applyFilter()">To Do</button>
+    <button [class.active]="filter==='in-progress'" (click)="filter='in-progress'; applyFilter()">In Progress</button>
+    <button [class.active]="filter==='done'" (click)="filter='done'; applyFilter()">Done</button>
+  </div>
 
-  @if (loading) {
-
-    <div class="message">
-      Loading tasks...
-    </div>
-
-  }
-
-
-  @if (errorMessage) {
-
-    <div class="error">
-      {{ errorMessage }}
-    </div>
-
-  }
-
-
-  @if (!loading && tasks.length === 0) {
-
-    <div class="empty-state">
-
-      <div class="empty-icon">✓</div>
-
-      <h2>No tasks found</h2>
-
-      <p>
-        Create your first task to get started.
-      </p>
-<a routerLink="/tasks/create" class="create-btn">
-  + Create Task
-</a>
-
-    </div>
-
-  }
-
-
-  @if (!loading && tasks.length > 0) {
-
-    <div class="task-list">
-
-      @for (task of tasks; track task.id) {
-
-        <div class="task-card">
-
-          <div class="task-content">
-
-            <h3>
-              {{ task.title }}
-            </h3>
-
-            <p>
-              {{ task.description }}
-            </p>
-
-            <div class="task-meta">
-
-              <span
-                class="status"
-                [class.todo]="task.status === 'todo'"
-                [class.progress]="task.status === 'in-progress'"
-                [class.done]="task.status === 'done'">
-
-                {{ task.status }}
-
-              </span>
-
-              <span class="priority">
-                {{ task.priority }}
-              </span>
-
-              @if (task.dueDate) {
-                <span>
-                  Due: {{ task.dueDate | date }}
-                </span>
-              }
-
-            </div>
-
-          </div>
-
-
-          <button
-            class="delete-btn"
-            (click)="deleteTask(task.id)">
-
-            Delete
-
-          </button>
-
+  <div class="grid-3">
+    @for (task of filteredTasks; track task.id) {
+      <div class="card-3">
+        <div class="card-head">
+          <h3>{{ task.title }}</h3>
+          <span class="badge" [class.b-todo]="task.status==='todo'" [class.b-prog]="task.status==='in-progress'" [class.b-done]="task.status==='done'">
+            {{ task.status }}
+          </span>
         </div>
+        <p class="desc">{{ task.description }}</p>
+        <p class="date">Project: {{ getProjectName(task.projectId) }}</p>
+        <div class="card-actions">
+          <button class="edit-btn" (click)="editTask(task)">Edit</button>
+          <button class="delete-btn" (click)="deleteTask(task.id)">Delete</button>
+        </div>
+      </div>
+    }
+  </div>
 
-      }
-
-    </div>
-
+  @if (filteredTasks.length === 0) {
+    <div class="empty">No tasks in this filter</div>
   }
-
 </div>
+
+<!-- Modal -->
+@if (showModal) {
+  <div class="modal-overlay" (click)="closeModal()">
+    <div class="modal" (click)="$event.stopPropagation()">
+      <h2>{{ isEditing? 'Edit Task' : 'New Task' }}</h2>
+      <input [(ngModel)]="form.title" placeholder="Task title" />
+      <textarea [(ngModel)]="form.description" placeholder="Description"></textarea>
+      <select [(ngModel)]="form.projectId">
+        @for (p of projects; track p.id) {
+          <option [value]="p.id">{{ p.name }}</option>
+        }
+      </select>
+      <select [(ngModel)]="form.status">
+        <option value="todo">To Do</option>
+        <option value="in-progress">In Progress</option>
+        <option value="done">Done</option>
+      </select>
+      <div class="modal-actions">
+        <button (click)="closeModal()">Cancel</button>
+        <button style="background:#111827;color:#fff;padding:9px 18px;border-radius:9px;border:none;font-weight:600;cursor:pointer" (click)="saveTask()">Save Task</button>
+      </div>
+    </div>
+  </div>
+}

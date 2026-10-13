@@ -1,11 +1,6 @@
 import { Component, inject } from '@angular/core';
-import {
-  FormBuilder,
-  ReactiveFormsModule,
-  Validators
-} from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-
 import { ProjectService } from '../../../core/services/project.service';
 
 @Component({
@@ -22,12 +17,9 @@ export class CreateProjectComponent {
     inject(ProjectService);
 
   private readonly router = inject(Router);
-
   loading = false;
   errorMessage = '';
-
   projectForm = this.fb.nonNullable.group({
-
     name: [
       '',
       [
@@ -39,19 +31,17 @@ export class CreateProjectComponent {
     description: [''],
 
     status: this.fb.nonNullable.control<
-      'active' | 'completed' | 'on-hold'
-    >(
+      'active' | 'completed' | 'on-hold'>
+    (
       'active',
       Validators.required
     )
   });
 
   onSubmit(): void {
-
+    
     if (this.projectForm.invalid) {
-
       this.projectForm.markAllAsTouched();
-
       return;
     }
 
@@ -59,7 +49,6 @@ export class CreateProjectComponent {
     this.errorMessage = '';
 
     try {
-
       const projectData =
         this.projectForm.getRawValue();
 
@@ -76,9 +65,8 @@ export class CreateProjectComponent {
       this.loading = false;
 
       this.router.navigate(['/projects']);
-
-    } catch (error) {
-
+    } 
+    catch (error) {
       console.error(
         'CREATE PROJECT ERROR:',
         error

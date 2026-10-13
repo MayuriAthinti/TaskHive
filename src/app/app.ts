@@ -1,17 +1,18 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import {
   Router,
   RouterOutlet,
   RouterLink,
   RouterLinkActive
 } from '@angular/router';
-
+import { CommonModule } from '@angular/common';
 import { AuthService } from './core/services/auth.service';
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [
+    CommonModule,
     RouterOutlet,
     RouterLink,
     RouterLinkActive
@@ -24,10 +25,14 @@ export class App {
   private readonly router = inject(Router);
   private readonly authService = inject(AuthService);
 
+  isCollapsed = signal(false);
+
+  toggleSidebar(): void {
+    this.isCollapsed.update(v => !v);
+  }
+
   showSidebar(): boolean {
-
     const url = this.router.url;
-
     return this.authService.isAuthenticated() &&
            url !== '/auth' &&
            url !== '/register';

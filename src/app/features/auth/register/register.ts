@@ -1,11 +1,6 @@
 import { Component, inject } from '@angular/core';
-import {
-  FormBuilder,
-  ReactiveFormsModule,
-  Validators
-} from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
 import { Router } from '@angular/router';
-
 import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
@@ -24,9 +19,7 @@ export class RegisterComponent {
   loading = false;
   errorMessage = '';
   successMessage = '';
-
   registerForm = this.fb.nonNullable.group({
-
     name: [
       '',
       [
@@ -34,7 +27,6 @@ export class RegisterComponent {
         Validators.minLength(3)
       ]
     ],
-
     email: [
       '',
       [
@@ -42,7 +34,6 @@ export class RegisterComponent {
         Validators.email
       ]
     ],
-
     password: [
       '',
       [
@@ -51,42 +42,30 @@ export class RegisterComponent {
       ]
     ]
   });
-
   onSubmit(): void {
-
     if (this.registerForm.invalid) {
       this.registerForm.markAllAsTouched();
       return;
     }
-
     this.loading = true;
     this.errorMessage = '';
     this.successMessage = '';
 
     const registerData = this.registerForm.getRawValue();
-
     this.authService.register(registerData).subscribe({
-
       next: () => {
-
         this.loading = false;
-
         this.successMessage =
           'Account created successfully!';
-
         setTimeout(() => {
           this.router.navigate(['/auth']);
         }, 1000);
       },
-
       error: () => {
-
         this.loading = false;
-
         this.errorMessage =
           'Unable to create account. Please try again.';
       }
-
     });
   }
 }

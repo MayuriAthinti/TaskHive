@@ -1,115 +1,50 @@
-<div class="projects-page">
-
-  <div class="page-header">
-
+<div class="page-wrap">
+  <div class="page-top">
     <div>
       <h1>Projects</h1>
-      <p>Manage all your projects in one place.</p>
+      <p>{{ projects.length }} projects</p>
     </div>
-
-    <button
-      class="create-btn"
-      (click)="createProject()">
-
-      + Create Project
-
-    </button>
-
+    <button class="create-btn" (click)="openCreate()">+ New Project</button>
   </div>
 
-  @if (loading) {
-
-    <div class="loading">
-      Loading projects...
-    </div>
-
-  }
-
-  @if (errorMessage) {
-
-    <div class="error">
-      {{ errorMessage }}
-    </div>
-
-  }
-
-  @if (!loading && projects.length === 0) {
-
-    <div class="empty-state">
-
-      <h2>No Projects Yet</h2>
-
-      <p>
-        Create your first project to get started.
-      </p>
-
-      <button
-        class="create-btn"
-        (click)="createProject()">
-
-        Create Project
-
-      </button>
-
-    </div>
-
-  }
-
-  @if (!loading && projects.length > 0) {
-
-    <div class="project-grid">
-
-      @for (project of projects; track project.id) {
-
-        <div class="project-card">
-
-          <div class="project-header">
-
-            <h2>
-              {{ project.name }}
-            </h2>
-
-            <span
-              class="status"
-              [class.active]="project.status === 'active'"
-              [class.completed]="project.status === 'completed'"
-              [class.on-hold]="project.status === 'on-hold'">
-
-              {{ project.status }}
-
-            </span>
-
-          </div>
-
-          <p class="description">
-
-            {{ project.description || 'No description available.' }}
-
-          </p>
-
-          <div class="project-footer">
-
-            <span>
-              Created:
-              {{ project.createdAt | date:'mediumDate' }}
-            </span>
-
-            <button
-              class="delete-btn"
-              (click)="deleteProject(project.id)">
-
-              Delete
-
-            </button>
-
-          </div>
-
+  <div class="grid-3">
+    @for (project of projects; track project.id) {
+      <div class="card-3">
+        <div class="card-head">
+          <h3>{{ project.name }}</h3>
+          <span class="badge">{{ project.status }}</span>
         </div>
+        <p class="desc">{{ project.description || 'No description' }}</p>
+        <p class="date">Created: {{ project.createdAt | date:'mediumDate' }}</p>
+        <div class="card-actions">
+          <button class="edit-btn" (click)="editProject(project)">Edit</button>
+          <button class="delete-btn" (click)="deleteProject(project.id)">Delete</button>
+        </div>
+      </div>
+    }
+  </div>
 
-      }
-
-    </div>
-
+  @if (projects.length === 0) {
+    <div class="empty">No projects yet. Click + New Project</div>
   }
-
 </div>
+
+<!-- Create/Edit Modal - keep your existing modal -->
+@if (showModal) {
+  <div class="modal-overlay" (click)="closeModal()">
+    <div class="modal" (click)="$event.stopPropagation()">
+      <h2>{{ isEditing? 'Edit Project' : 'New Project' }}</h2>
+      <input [(ngModel)]="form.name" placeholder="Project name" />
+      <textarea [(ngModel)]="form.description" placeholder="Description"></textarea>
+      <select [(ngModel)]="form.status">
+        <option value="active">Active</option>
+        <option value="completed">Completed</option>
+        <option value="on-hold">On Hold</option>
+      </select>
+      <div class="modal-actions">
+        <button (click)="closeModal()">Cancel</button>
+        <button style="background:#111827;color:#fff;padding:9px 18px;border-radius:9px;border:none;font-weight:600;cursor:pointer" (click)="saveProject()">Save Project</button>
+      </div>
+    </div>
+  </div>
+}

@@ -1,70 +1,70 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { CommonModule, DatePipe } from '@angular/common';
-import { Router } from '@angular/router';
-
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { ProjectService } from '../../../core/services/project.service';
-import { Project } from '../../../core/models/project.model';
 
 @Component({
   selector: 'app-projects',
   standalone: true,
-  imports: [CommonModule, DatePipe],
+  imports: [CommonModule, FormsModule],
   templateUrl: './projects.html',
-  styleUrl: './projects.css'
+  styleUrls: ['./projects.css']
 })
 export class ProjectsComponent implements OnInit {
+  projects: any[] = [];
+  showModal = false;
+  isEditing = false;
+  editingId: string | null = null;
 
-  private readonly projectService = inject(ProjectService);
-  private readonly router = inject(Router);
+  form: any = {
+    name: '',
+    description: '',
+    status: 'active'
+  };
 
-  projects: Project[] = [];
+  constructor(private projectService: ProjectService) {}
 
-  loading = false;
-  errorMessage = '';
-
-  ngOnInit(): void {
-    this.loadProjects();
+  ngOnInit() {
+    this.loadData();
   }
 
-  loadProjects(): void {
+  loadData() {
+    this.projects = this.projectService.getProjects();
+  }
 
-    this.loading = true;
-    this.errorMessage = '';
+  openCreate() {
+    this.isEditing = false;
+    this.editingId = null;
+    this.form = { name: '', description: '', status: 'active' };
+    this.showModal = true;
+  }
 
-    try {
+  editProject(project: any) {
+    this.isEditing = true;
+    this.editingId = project.id;
+    this.form = { name: project.name, description: project.description, status: project.status };
+    this.showModal = true;
+  }
 
-      this.projects =
-        this.projectService.getProjects();
-
-      console.log('LOCAL PROJECTS:', this.projects);
-
-      this.loading = false;
-
-    } catch (error) {
-
-      console.error('LOAD PROJECTS ERROR:', error);
-
-      this.loading = false;
-      this.errorMessage = 'Unable to load projects.';
+  saveProject() {
+    if(!this.form.name.trim()) return;
+    if(this.isEditing && this.editingId){
+      this.projectService.updateProject(this.editingId, this.form);
+    } else {
+      this.projectService.createProject(this.form);
     }
+    this.closeModal();
+    this.loadData();
   }
 
-  createProject(): void {
-    this.router.navigate(['/projects/create']);
-  }
-
-  deleteProject(id: string): void {
-
-    if (!confirm('Are you sure you want to delete this project?')) {
-      return;
-    }
-
+  deleteProject(id: string) {
+    if(!confirm('Delete project?')) return;
     this.projectService.deleteProject(id);
-
-    this.loadProjects();
+    this.loadData();
   }
 
-  goToDashboard(): void {
-    this.router.navigate(['/dashboard']);
+  closeModal() {
+    this.showModal = false;
+    this.editingId = null;
   }
 }

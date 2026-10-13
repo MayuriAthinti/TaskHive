@@ -1,55 +1,36 @@
 <div class="app-layout">
-
   @if (showSidebar()) {
-
-    <aside class="sidebar">
-
+    <aside class="sidebar" [class.collapsed]="isCollapsed()">
       <div class="logo">
-        <h2>TaskHive</h2>
+        @if (!isCollapsed()) {
+          <h1> TaskHive</h1>
+        }
+        <button class="collapse-btn" (click)="toggleSidebar()">
+          {{ isCollapsed() ? '→' : '←' }}
+        </button>
       </div>
 
       <nav>
-
-        <button
-          class="nav-item"
-          routerLink="/dashboard"
-          routerLinkActive="active">
+        <button class="nav-item" routerLink="/dashboard" routerLinkActive="active">
           <span>▦</span>
-          Dashboard
+          @if (!isCollapsed()) { Dashboard }
         </button>
 
-        <button
-          class="nav-item"
-          routerLink="/projects"
-          routerLinkActive="active">
+        <button class="nav-item" routerLink="/projects" routerLinkActive="active">
           <span>▣</span>
-          Projects
+          @if (!isCollapsed()) { Projects }
         </button>
 
-        <button
-          class="nav-item"
-          routerLink="/tasks"
-          routerLinkActive="active">
+        <button class="nav-item" routerLink="/tasks" routerLinkActive="active">
           <span>✓</span>
-          Tasks
+          @if (!isCollapsed()) { Tasks }
         </button>
-
       </nav>
 
-      <button
-        class="logout"
-        (click)="logout()">
-        ⇥ Logout
-      </button>
-
     </aside>
-
   }
 
   <main class="main-content">
-
     <router-outlet></router-outlet>
-
   </main>
-
 </div>

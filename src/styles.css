@@ -1,1 +1,22 @@
-/* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+  background: #eef2ff !important;
+  background-image: none !important;
+}
+
+app-root {
+  display: block;
+  min-height: 100vh;
+  background: #eef2ff !important;
+  background-image: none !important;
+}
+
+.register-page {
+  min-height: 100vh;
+  background: #eef2ff !important;
+  background-image: none !important;
+}
