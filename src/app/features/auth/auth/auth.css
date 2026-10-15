@@ -1,85 +1,79 @@
+
 :host {
   display: block;
   width: 100%;
-  height: 100vh;
-  overflow: hidden;
+  min-height: 100vh;
   font-family: Arial, Helvetica, sans-serif;
-  box-sizing: border-box;
 }
 
 .login-page {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-
+  inset: 0;
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
+  justify-content: center !important;
+  align-items: center !important;
   background: #0878cf;
-  overflow: hidden;
-
-  margin: 0;
-  padding: 24px;
+  padding: 20px;
+  overflow-y: auto;
+  overflow-x: hidden;
   box-sizing: border-box;
 }
 
 .login-card {
+  width: min(100%, 460px);
+  margin: 0 auto !important;
+  padding: 28px 36px 24px;
+  flex-shrink: 0;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
+  box-sizing: border-box;
+}
+
+.login-page footer {
   width: 100%;
-  max-width: 555px;
-  padding: 44px 55px 36px;
+  margin: 12px auto 0;
+  text-align: center;
+  color: white;
+}
+
+
+.login-card {
+  width: 100%;
+  max-width: 460px;
+  padding: 28px 36px 24px;
   border-radius: 12px;
   background: #ffffff;
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
+  box-sizing: border-box;
 }
 
-.login-card .register-link {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  gap: 6px;
-}
-
-.login-card .register-link button {
-  background: none !important;
-  border: none !important;
-  box-shadow: none !important;
-  color: #6045e8;
-  padding: 0;
-  cursor: pointer;
-}
-
-.forgot-link {
-  display: block;
-  text-align: center;
-  margin-top: 15px;
-}
 .brand {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 12px;
-  margin-bottom: 30px;
+  gap: 10px;
+  margin-bottom: 22px;
   color: #084c91;
 }
 
 .brand-icon {
-  width: 65px;
-  height: 65px;
+  width: 48px;
+  height: 48px;
   display: grid;
   place-items: center;
-  border: 3px solid #087de0;
+  border: 2px solid #087de0;
   border-radius: 50%;
   color: #087de0;
-  font-size: 43px;
+  font-size: 32px;
 }
 
 .brand-text h1 {
   margin: 0;
-  font-size: 42px;
+  font-size: 34px;
   line-height: 1.1;
   font-weight: 700;
   letter-spacing: -1px;
@@ -87,32 +81,34 @@
 
 .brand-text p {
   margin: 5px 0 0;
-  font-size: 12px;
+  font-size: 10px;
   font-weight: 700;
-  letter-spacing: 4px;
+  letter-spacing: 3px;
 }
 
 .login-card h2 {
-  margin: 0 0 20px;
+  margin: 0 0 16px;
   color: #101820;
-  font-size: 23px;
+  font-size: 21px;
 }
 
 .input-group {
   display: flex;
   align-items: center;
-  height: 47px;
-  margin-bottom: 18px;
-  padding: 0 13px;
+  height: 42px;
+  margin-bottom: 13px;
+  padding: 0 10px;
   border: 1px solid #b9bec5;
   border-radius: 6px;
   background: #fff;
+  box-sizing: border-box;
 }
 
 .input-icon {
   width: 25px;
+  flex-shrink: 0;
   color: #27323e;
-  font-size: 23px;
+  font-size: 20px;
 }
 
 .input-group input {
@@ -120,12 +116,13 @@
   width: 100%;
   min-width: 0;
   height: 100%;
-  padding: 0 10px;
+  padding: 0 8px;
   border: none;
   outline: none;
   background: transparent;
   color: #17212b;
   font-size: 14px;
+  box-sizing: border-box;
 }
 
 .input-group:focus-within {
@@ -139,14 +136,14 @@
 
 .login-card button {
   display: block;
-  width: 65%;
-  min-height: 51px;
-  margin: 20px auto 0;
+  width: 72%;
+  min-height: 44px;
+  margin: 16px auto 0;
   border: none;
   border-radius: 7px;
   background: #0754a6;
   color: #fff;
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 700;
   cursor: pointer;
   box-shadow: 0 4px 7px rgba(0, 0, 0, 0.2);
@@ -161,13 +158,43 @@
   cursor: not-allowed;
 }
 
+.login-card .register-link {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 18px;
+  font-size: 14px;
+}
+
+.login-card .register-link button {
+  display: inline;
+  width: auto;
+  min-height: auto;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: none !important;
+  box-shadow: none !important;
+  color: #6045e8;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.login-card .register-link button:hover {
+  color: #4330b5;
+  text-decoration: underline;
+}
+
 .forgot-link {
   display: block;
-  margin-top: 36px;
+  margin-top: 22px;
   color: #78879b;
   text-align: center;
   text-decoration: none;
-  font-size: 14px;
+  font-size: 13px;
 }
 
 .forgot-link:hover {
@@ -176,42 +203,46 @@
 }
 
 .error-message {
-  margin-top: 12px;
+  margin-top: 10px;
   color: #c62828;
   font-size: 13px;
   text-align: center;
 }
 
 footer {
-  margin-top: 20px;
+  margin-top: 12px;
   color: #ffffff;
   text-align: center;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 600;
 }
 
 footer p {
-  margin: 8px 0;
+  margin: 6px 0;
 }
 
 @media (max-width: 600px) {
   .login-page {
-    padding: 16px;
+    padding: 14px;
   }
 
   .login-card {
-    max-width: 100%;
-    padding: 32px 24px;
+    max-width: 380px;
+    padding: 24px 20px;
+  }
+
+  .brand {
+    margin-bottom: 20px;
   }
 
   .brand-text h1 {
-    font-size: 32px;
+    font-size: 30px;
   }
 
   .brand-icon {
-    width: 52px;
-    height: 52px;
-    font-size: 34px;
+    width: 42px;
+    height: 42px;
+    font-size: 28px;
   }
 
   .brand-text p {
@@ -220,10 +251,41 @@ footer p {
   }
 
   .login-card button {
-    width: 100%;
+    width: 85%;
+  }
+
+  .login-card .register-link button {
+    width: auto;
   }
 
   footer {
+    margin-top: 12px;
+    font-size: 11px;
+  }
+}
+
+@media (max-height: 650px) {
+  .login-page {
+    justify-content: flex-start;
+    overflow-y: auto;
+    padding-top: 16px;
+    padding-bottom: 16px;
+  }
+
+  .login-card {
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+
+  .brand {
+    margin-bottom: 14px;
+  }
+
+  .forgot-link {
     margin-top: 16px;
+  }
+
+  footer {
+    margin-top: 10px;
   }
 }
